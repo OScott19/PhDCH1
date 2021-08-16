@@ -1,0 +1,16 @@
+things to include in this gantt chart: 
+
+- Reading: 
+Work on literature review & iterate
+
+Chapter 1: model evaluation
+
+Data acquision: 
+
+
+
+
+Chapter 2: sensitivity testing using a variety of different particle simulators
+
+
+Chapter 3: LDM for the scotia sea
