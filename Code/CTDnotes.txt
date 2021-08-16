@@ -1,0 +1,10 @@
+Notes on CTD files
+
+
+
+
+
+# LIST OF ONLINE RESOURCES I'VE USED
+
+general guide: 
+https://www.image.ucar.edu/GSP/Software/Netcdf/

@@ -1,0 +1,525 @@
+File ../Data/CMEMS/Data/copernicus-fulldepth-monthlydata/CMEMS-GLOBAL_001_024-several_vars-2019_2021.nc (NC_FORMAT_NETCDF4):
+
+     11 variables (excluding dimension variables):
+        short mlotst[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Density ocean mixed layer thickness
+            standard_name: ocean_mixed_layer_thickness_defined_by_sigma_theta
+            units: m
+            unit_long: Meters
+            cell_methods: area: mean
+            add_offset: -0.152592554688454
+            scale_factor: 0.152592554688454
+        short siconc[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Ice concentration
+            standard_name: sea_ice_area_fraction
+            units: 1
+            unit_long: Fraction
+            cell_methods: area: mean where sea_ice
+            add_offset: -3.81481368094683e-05
+            scale_factor: 3.81481368094683e-05
+        short thetao[longitude,latitude,depth,time]   (Chunking: [121,65,17,9])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Temperature
+            standard_name: sea_water_potential_temperature
+            units: degrees_C
+            unit_long: Degrees Celsius
+            cell_methods: area: mean
+            add_offset: 21
+            scale_factor: 0.000732444226741791
+        short usi[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea ice eastward velocity
+            standard_name: eastward_sea_ice_velocity
+            units: m s-1
+            unit_long: Meters per second
+            cell_methods: area: mean where sea_ice
+            add_offset: 0
+            scale_factor: 3.05185094475746e-05
+        short sithick[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea ice thickness
+            standard_name: sea_ice_thickness
+            units: m
+            unit_long: Meters
+            cell_methods: area: mean where sea_ice
+            add_offset: -0.000762962736189365
+            scale_factor: 0.000762962736189365
+        short bottomT[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea floor potential temperature
+            standard_name: sea_water_potential_temperature_at_sea_floor
+            units: degrees_C
+            unit_long: Degrees Celsius
+            cell_methods: area: mean
+            add_offset: 21
+            scale_factor: 0.000732444226741791
+        short vsi[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea ice northward velocity
+            standard_name: northward_sea_ice_velocity
+            units: m s-1
+            unit_long: Meters per second
+            cell_methods: area: mean where sea_ice
+            add_offset: 0
+            scale_factor: 3.05185094475746e-05
+        short vo[longitude,latitude,depth,time]   (Chunking: [121,65,17,9])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Northward velocity
+            standard_name: northward_sea_water_velocity
+            units: m s-1
+            unit_long: Meters per second
+            cell_methods: area: mean
+            add_offset: 0
+            scale_factor: 0.000610370188951492
+        short uo[longitude,latitude,depth,time]   (Chunking: [121,65,17,9])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Eastward velocity
+            standard_name: eastward_sea_water_velocity
+            units: m s-1
+            unit_long: Meters per second
+            cell_methods: area: mean
+            add_offset: 0
+            scale_factor: 0.000610370188951492
+        short so[longitude,latitude,depth,time]   (Chunking: [121,65,17,9])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Salinity
+            standard_name: sea_water_salinity
+            units: 1e-3
+            unit_long: Practical Salinity Unit
+            cell_methods: area: mean
+            add_offset: -0.00152592547237873
+            scale_factor: 0.00152592547237873
+        short zos[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea surface height
+            standard_name: sea_surface_height_above_geoid
+            units: m
+            unit_long: Meters
+            cell_methods: area: mean
+            add_offset: 0
+            scale_factor: 0.000305185094475746
+
+     4 dimensions:
+        time  Size:27
+            long_name: Time (hours since 1950-01-01)
+            standard_name: time
+            axis: T
+            _CoordinateAxisType: Time
+            units: hours since 2019-01-16 12:00:00
+            calendar: proleptic_gregorian
+        latitude  Size:193
+            _FillValue: NaN
+            valid_min: -70
+            valid_max: -54
+            step: 0.0833358764648438
+            units: degrees_north
+            unit_long: Degrees North
+            long_name: Latitude
+            standard_name: latitude
+            axis: Y
+            _CoordinateAxisType: Lat
+        longitude  Size:361
+            _FillValue: NaN
+            valid_min: -66
+            valid_max: -36
+            step: 0.0833282470703125
+            units: degrees_east
+            unit_long: Degrees East
+            long_name: Longitude
+            standard_name: longitude
+            axis: X
+            _CoordinateAxisType: Lon
+        depth  Size:50
+            _FillValue: NaN
+            valid_min: 0.494024991989136
+            valid_max: 5727.9169921875
+            units: m
+            positive: down
+            unit_long: Meters
+            long_name: Depth
+            standard_name: depth
+            axis: Z
+            _CoordinateAxisType: Height
+            _CoordinateZisPositive: down
+
+    18 global attributes:
+        title: Monthly mean fields for product GLOBAL_ANALYSIS_FORECAST_PHY_001_024
+        references: http://marine.copernicus.eu
+        credit: E.U. Copernicus Marine Service Information (CMEMS)
+        licence: http://marine.copernicus.eu/services-portfolio/service-commitments-and-licence/
+        contact: servicedesk.cmems@mercator-ocean.eu
+        producer: CMEMS - Global Monitoring and Forecasting Centre
+        institution: Mercator Ocean
+        conventions: CF-1.6
+        area: GLOBAL
+        product: GLOBAL_ANALYSIS_FORECAST_PHY_001_024
+        dataset: global-analysis-forecast-phy-001-024-monthly
+        source: MERCATOR PSY4QV3R1
+        product_user_manual: http://marine.copernicus.eu/documents/PUM/CMEMS-GLO-PUM-001-024.pdf
+        quality_information_document: http://marine.copernicus.eu/documents/QUID/CMEMS-GLO-QUID-001-024.pdf
+        _CoordSysBuilder: ucar.nc2.dataset.conv.CF1Convention
+        Conventions: CF-1.0
+        comment: 
+        history: Data extracted from dataset http://localhost:8080/thredds/dodsC/global-analysis-forecast-phy-001-024-monthly
+File ../Data/CMEMS/Data/copernicus-fulldepth-monthlydata/CMEMS-GLOBAL_001_024-several_vars-2019_2021.nc (NC_FORMAT_NETCDF4):
+
+     11 variables (excluding dimension variables):
+        short mlotst[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Density ocean mixed layer thickness
+            standard_name: ocean_mixed_layer_thickness_defined_by_sigma_theta
+            units: m
+            unit_long: Meters
+            cell_methods: area: mean
+            add_offset: -0.152592554688454
+            scale_factor: 0.152592554688454
+        short siconc[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Ice concentration
+            standard_name: sea_ice_area_fraction
+            units: 1
+            unit_long: Fraction
+            cell_methods: area: mean where sea_ice
+            add_offset: -3.81481368094683e-05
+            scale_factor: 3.81481368094683e-05
+        short thetao[longitude,latitude,depth,time]   (Chunking: [121,65,17,9])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Temperature
+            standard_name: sea_water_potential_temperature
+            units: degrees_C
+            unit_long: Degrees Celsius
+            cell_methods: area: mean
+            add_offset: 21
+            scale_factor: 0.000732444226741791
+        short usi[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea ice eastward velocity
+            standard_name: eastward_sea_ice_velocity
+            units: m s-1
+            unit_long: Meters per second
+            cell_methods: area: mean where sea_ice
+            add_offset: 0
+            scale_factor: 3.05185094475746e-05
+        short sithick[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea ice thickness
+            standard_name: sea_ice_thickness
+            units: m
+            unit_long: Meters
+            cell_methods: area: mean where sea_ice
+            add_offset: -0.000762962736189365
+            scale_factor: 0.000762962736189365
+        short bottomT[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea floor potential temperature
+            standard_name: sea_water_potential_temperature_at_sea_floor
+            units: degrees_C
+            unit_long: Degrees Celsius
+            cell_methods: area: mean
+            add_offset: 21
+            scale_factor: 0.000732444226741791
+        short vsi[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea ice northward velocity
+            standard_name: northward_sea_ice_velocity
+            units: m s-1
+            unit_long: Meters per second
+            cell_methods: area: mean where sea_ice
+            add_offset: 0
+            scale_factor: 3.05185094475746e-05
+        short vo[longitude,latitude,depth,time]   (Chunking: [121,65,17,9])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Northward velocity
+            standard_name: northward_sea_water_velocity
+            units: m s-1
+            unit_long: Meters per second
+            cell_methods: area: mean
+            add_offset: 0
+            scale_factor: 0.000610370188951492
+        short uo[longitude,latitude,depth,time]   (Chunking: [121,65,17,9])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Eastward velocity
+            standard_name: eastward_sea_water_velocity
+            units: m s-1
+            unit_long: Meters per second
+            cell_methods: area: mean
+            add_offset: 0
+            scale_factor: 0.000610370188951492
+        short so[longitude,latitude,depth,time]   (Chunking: [121,65,17,9])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Salinity
+            standard_name: sea_water_salinity
+            units: 1e-3
+            unit_long: Practical Salinity Unit
+            cell_methods: area: mean
+            add_offset: -0.00152592547237873
+            scale_factor: 0.00152592547237873
+        short zos[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea surface height
+            standard_name: sea_surface_height_above_geoid
+            units: m
+            unit_long: Meters
+            cell_methods: area: mean
+            add_offset: 0
+            scale_factor: 0.000305185094475746
+
+     4 dimensions:
+        time  Size:27
+            long_name: Time (hours since 1950-01-01)
+            standard_name: time
+            axis: T
+            _CoordinateAxisType: Time
+            units: hours since 2019-01-16 12:00:00
+            calendar: proleptic_gregorian
+        latitude  Size:193
+            _FillValue: NaN
+            valid_min: -70
+            valid_max: -54
+            step: 0.0833358764648438
+            units: degrees_north
+            unit_long: Degrees North
+            long_name: Latitude
+            standard_name: latitude
+            axis: Y
+            _CoordinateAxisType: Lat
+        longitude  Size:361
+            _FillValue: NaN
+            valid_min: -66
+            valid_max: -36
+            step: 0.0833282470703125
+            units: degrees_east
+            unit_long: Degrees East
+            long_name: Longitude
+            standard_name: longitude
+            axis: X
+            _CoordinateAxisType: Lon
+        depth  Size:50
+            _FillValue: NaN
+            valid_min: 0.494024991989136
+            valid_max: 5727.9169921875
+            units: m
+            positive: down
+            unit_long: Meters
+            long_name: Depth
+            standard_name: depth
+            axis: Z
+            _CoordinateAxisType: Height
+            _CoordinateZisPositive: down
+
+    18 global attributes:
+        title: Monthly mean fields for product GLOBAL_ANALYSIS_FORECAST_PHY_001_024
+        references: http://marine.copernicus.eu
+        credit: E.U. Copernicus Marine Service Information (CMEMS)
+        licence: http://marine.copernicus.eu/services-portfolio/service-commitments-and-licence/
+        contact: servicedesk.cmems@mercator-ocean.eu
+        producer: CMEMS - Global Monitoring and Forecasting Centre
+        institution: Mercator Ocean
+        conventions: CF-1.6
+        area: GLOBAL
+        product: GLOBAL_ANALYSIS_FORECAST_PHY_001_024
+        dataset: global-analysis-forecast-phy-001-024-monthly
+        source: MERCATOR PSY4QV3R1
+        product_user_manual: http://marine.copernicus.eu/documents/PUM/CMEMS-GLO-PUM-001-024.pdf
+        quality_information_document: http://marine.copernicus.eu/documents/QUID/CMEMS-GLO-QUID-001-024.pdf
+        _CoordSysBuilder: ucar.nc2.dataset.conv.CF1Convention
+        Conventions: CF-1.0
+        comment: 
+        history: Data extracted from dataset http://localhost:8080/thredds/dodsC/global-analysis-forecast-phy-001-024-monthly
+File ../Data/CMEMS/Data/copernicus-fulldepth-monthlydata/CMEMS-GLOBAL_001_024-several_vars-2019_2021.nc (NC_FORMAT_NETCDF4):
+
+     11 variables (excluding dimension variables):
+        short mlotst[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Density ocean mixed layer thickness
+            standard_name: ocean_mixed_layer_thickness_defined_by_sigma_theta
+            units: m
+            unit_long: Meters
+            cell_methods: area: mean
+            add_offset: -0.152592554688454
+            scale_factor: 0.152592554688454
+        short siconc[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Ice concentration
+            standard_name: sea_ice_area_fraction
+            units: 1
+            unit_long: Fraction
+            cell_methods: area: mean where sea_ice
+            add_offset: -3.81481368094683e-05
+            scale_factor: 3.81481368094683e-05
+        short thetao[longitude,latitude,depth,time]   (Chunking: [121,65,17,9])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Temperature
+            standard_name: sea_water_potential_temperature
+            units: degrees_C
+            unit_long: Degrees Celsius
+            cell_methods: area: mean
+            add_offset: 21
+            scale_factor: 0.000732444226741791
+        short usi[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea ice eastward velocity
+            standard_name: eastward_sea_ice_velocity
+            units: m s-1
+            unit_long: Meters per second
+            cell_methods: area: mean where sea_ice
+            add_offset: 0
+            scale_factor: 3.05185094475746e-05
+        short sithick[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea ice thickness
+            standard_name: sea_ice_thickness
+            units: m
+            unit_long: Meters
+            cell_methods: area: mean where sea_ice
+            add_offset: -0.000762962736189365
+            scale_factor: 0.000762962736189365
+        short bottomT[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea floor potential temperature
+            standard_name: sea_water_potential_temperature_at_sea_floor
+            units: degrees_C
+            unit_long: Degrees Celsius
+            cell_methods: area: mean
+            add_offset: 21
+            scale_factor: 0.000732444226741791
+        short vsi[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea ice northward velocity
+            standard_name: northward_sea_ice_velocity
+            units: m s-1
+            unit_long: Meters per second
+            cell_methods: area: mean where sea_ice
+            add_offset: 0
+            scale_factor: 3.05185094475746e-05
+        short vo[longitude,latitude,depth,time]   (Chunking: [121,65,17,9])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Northward velocity
+            standard_name: northward_sea_water_velocity
+            units: m s-1
+            unit_long: Meters per second
+            cell_methods: area: mean
+            add_offset: 0
+            scale_factor: 0.000610370188951492
+        short uo[longitude,latitude,depth,time]   (Chunking: [121,65,17,9])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Eastward velocity
+            standard_name: eastward_sea_water_velocity
+            units: m s-1
+            unit_long: Meters per second
+            cell_methods: area: mean
+            add_offset: 0
+            scale_factor: 0.000610370188951492
+        short so[longitude,latitude,depth,time]   (Chunking: [121,65,17,9])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Salinity
+            standard_name: sea_water_salinity
+            units: 1e-3
+            unit_long: Practical Salinity Unit
+            cell_methods: area: mean
+            add_offset: -0.00152592547237873
+            scale_factor: 0.00152592547237873
+        short zos[longitude,latitude,time]   (Chunking: [361,193,27])  (Compression: shuffle,level 1)
+            _FillValue: -32767
+            long_name: Sea surface height
+            standard_name: sea_surface_height_above_geoid
+            units: m
+            unit_long: Meters
+            cell_methods: area: mean
+            add_offset: 0
+            scale_factor: 0.000305185094475746
+
+     4 dimensions:
+        time  Size:27
+            long_name: Time (hours since 1950-01-01)
+            standard_name: time
+            axis: T
+            _CoordinateAxisType: Time
+            units: hours since 2019-01-16 12:00:00
+            calendar: proleptic_gregorian
+        latitude  Size:193
+            _FillValue: NaN
+            valid_min: -70
+            valid_max: -54
+            step: 0.0833358764648438
+            units: degrees_north
+            unit_long: Degrees North
+            long_name: Latitude
+            standard_name: latitude
+            axis: Y
+            _CoordinateAxisType: Lat
+        longitude  Size:361
+            _FillValue: NaN
+            valid_min: -66
+            valid_max: -36
+            step: 0.0833282470703125
+            units: degrees_east
+            unit_long: Degrees East
+            long_name: Longitude
+            standard_name: longitude
+            axis: X
+            _CoordinateAxisType: Lon
+        depth  Size:50
+            _FillValue: NaN
+            valid_min: 0.494024991989136
+            valid_max: 5727.9169921875
+            units: m
+            positive: down
+            unit_long: Meters
+            long_name: Depth
+            standard_name: depth
+            axis: Z
+            _CoordinateAxisType: Height
+            _CoordinateZisPositive: down
+
+    18 global attributes:
+        title: Monthly mean fields for product GLOBAL_ANALYSIS_FORECAST_PHY_001_024
+        references: http://marine.copernicus.eu
+        credit: E.U. Copernicus Marine Service Information (CMEMS)
+        licence: http://marine.copernicus.eu/services-portfolio/service-commitments-and-licence/
+        contact: servicedesk.cmems@mercator-ocean.eu
+        producer: CMEMS - Global Monitoring and Forecasting Centre
+        institution: Mercator Ocean
+        conventions: CF-1.6
+        area: GLOBAL
+        product: GLOBAL_ANALYSIS_FORECAST_PHY_001_024
+        dataset: global-analysis-forecast-phy-001-024-monthly
+        source: MERCATOR PSY4QV3R1
+        product_user_manual: http://marine.copernicus.eu/documents/PUM/CMEMS-GLO-PUM-001-024.pdf
+        quality_information_document: http://marine.copernicus.eu/documents/QUID/CMEMS-GLO-QUID-001-024.pdf
+        _CoordSysBuilder: ucar.nc2.dataset.conv.CF1Convention
+        Conventions: CF-1.0
+        comment: 
+        history: Data extracted from dataset http://localhost:8080/thredds/dodsC/global-analysis-forecast-phy-001-024-monthly
+[1] "vobjtovarid4: error #F: I could not find the requsted var (or dimvar) in the file!"
+[1] "var (or dimvar) name: lon"
+[1] "file name: ../Data/CMEMS/Data/copernicus-fulldepth-monthlydata/CMEMS-GLOBAL_001_024-several_vars-2019_2021.nc"
+ [1]    0.494025    1.541375    2.645669    3.819495    5.078224    6.440614    7.929560    9.572997   11.405000
+[10]   13.467140   15.810070   18.495560   21.598820   25.211411   29.444731   34.434151   40.344051   47.373692
+[19]   55.764290   65.807266   77.853851   92.326073  109.729301  130.666000  155.850693  186.125595  222.475204
+[28]  266.040314  318.127411  380.213013  453.937714  541.088928  643.566772  763.333130  902.339294 1062.439941
+[37] 1245.291016 1452.250977 1684.284058 1941.892944 2225.077881 2533.335938 2865.702881 3220.820068 3597.031982
+[46] 3992.483887 4405.224121 4833.291016 5274.784180 5727.916992
+ [1]    0.494025    1.541375    2.645669    3.819495    5.078224    6.440614    7.929560    9.572997   11.405000
+[10]   13.467140   15.810070   18.495560   21.598820   25.211411   29.444731   34.434151   40.344051   47.373692
+[19]   55.764290   65.807266   77.853851   92.326073  109.729301  130.666000  155.850693  186.125595  222.475204
+[28]  266.040314  318.127411  380.213013  453.937714  541.088928  643.566772  763.333130  902.339294 1062.439941
+[37] 1245.291016 1452.250977 1684.284058 1941.892944 2225.077881 2533.335938 2865.702881 3220.820068 3597.031982
+[46] 3992.483887 4405.224121 4833.291016 5274.784180 5727.916992
+ [1]    0.494025    1.541375    2.645669    3.819495    5.078224    6.440614    7.929560    9.572997   11.405000
+[10]   13.467140   15.810070   18.495560   21.598820   25.211411   29.444731   34.434151   40.344051   47.373692
+[19]   55.764290   65.807266   77.853851   92.326073  109.729301  130.666000  155.850693  186.125595  222.475204
+[28]  266.040314  318.127411  380.213013  453.937714  541.088928  643.566772  763.333130  902.339294 1062.439941
+[37] 1245.291016 1452.250977 1684.284058 1941.892944 2225.077881 2533.335938 2865.702881 3220.820068 3597.031982
+[46] 3992.483887 4405.224121 4833.291016 5274.784180 5727.916992
+ [1]    0.494025    1.541375    2.645669    3.819495    5.078224    6.440614    7.929560    9.572997   11.405000
+[10]   13.467140   15.810070   18.495560   21.598820   25.211411   29.444731   34.434151   40.344051   47.373692
+[19]   55.764290   65.807266   77.853851   92.326073  109.729301  130.666000  155.850693  186.125595  222.475204
+[28]  266.040314  318.127411  380.213013  453.937714  541.088928  643.566772  763.333130  902.339294 1062.439941
+[37] 1245.291016 1452.250977 1684.284058 1941.892944 2225.077881 2533.335938 2865.702881 3220.820068 3597.031982
+[46] 3992.483887 4405.224121 4833.291016 5274.784180 5727.916992
+[1] -66.00000 -65.91666 -65.83334 -65.75000 -65.66666 -65.58334
+[1] -66.00000 -65.91666 -65.83334 -65.75000 -65.66666 -65.58334
+[1] -66.00000 -65.91666 -65.83334 -65.75000 -65.66666 -65.58334
