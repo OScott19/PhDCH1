@@ -233,4 +233,12 @@ length(w.data$var$DEPTH) > 0
 length(w.data$var$PRES) > 0
 
 
+# unfortunately we have a problem - all our info is now split into 7!! sections
+# next step - read in all seven and capture their file names
+# and then follow the procedure above - read in the first one, and check
+# if it's got something funny going on for depth and or/or pressure.. or anything else
+# only 900 more to capture!!
+
+
+
 
