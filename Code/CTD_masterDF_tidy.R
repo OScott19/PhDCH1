@@ -31,8 +31,6 @@ library(rgdal) # package for geospatial analysis
 library(ggplot2) # package for plotting
 library(chron) # converts julian dates (important!)
 
-path.to.data <- "../Data/BODC/AllCDTData/"
-
 
 ######################
 # prime the counter and the dataframes
