@@ -141,15 +141,64 @@ master.df <- master.df[-1,]
 length(master.df$I[is.na(master.df$I)]) # None!
 length(master.df$DATE[is.na(master.df$DATE)])
 length(master.df$JULIANINFO[is.na(master.df$JULIANINFO)])
-length(master.df$TEMPERATURE[is.na(master.df$TEMPERATURE)]) # quite a few
-length(master.df$TEMPERATURE_UNIT[is.na(master.df$TEMPERATURE_UNIT)]) # more than before - weird!
+length(master.df$TEMPERATURE[is.na(master.df$TEMPERATURE)]) # quite a few - 1087995
+length(master.df$TEMPERATURE_UNIT[is.na(master.df$TEMPERATURE_UNIT)]) # more than before - weird! - 1413952
 length(master.df$LAT[is.na(master.df$LAT)]) # back to None! 
 length(master.df$LONG[is.na(master.df$LONG)]) # back to None phew 
 length(master.df$CRUISEID[is.na(master.df$CRUISEID)]) # back to None phew 
 length(master.df$FILE[is.na(master.df$FILE)]) # back to None phew 
-
+length(master.df$SALINITY[is.na(master.df$SALINITY)]) # 2709321 
+length(master.df$SALINITY_UNIT[is.na(master.df$SALINITY_UNIT)]) # 2708242
 ### so it turns out that we have quite a lot more missing temperature data than I thought
-# but everything else is ok
+# and we also have quite a lot of missing salinity data. not good!
+
+
+#### let's have a look at some of the files with missing temperature data, and see what's going on
+
+nc_close(w.data)
+
+no.temp <- master.df$FILE[is.na(master.df$TEMPERATURE) == T] # matches number above
+
+no.temp <- unique(no.temp) # 859 files - ok 
+
+w.data <- nc_open(file = paste("../Data/BODC/AllCDTData/", no.temp[1], sep = ""))
+# so we have data, under the TEMPST01 
+
+data <- ncvar_get(w.data, "TEMPST01") # ok it has values here
+
+data.inmaster <- master.df$TEMPERATURE[master.df$FILE == no.temp[1]] # the same??
+min(data.inmaster)
+min(data)
+# however it *contains* an NA somewhere
+temp.table <- as.data.frame(table(data))
+sum(temp.table$Freq) # contains a single NA somewhere
+data.wholeclip <- master.df[master.df$FILE == no.temp[1],] 
+# and it appears this NA is from meter 92, which inexplicably has no data in it. 
+
+
+#### TO CONTINUE 
+### WORK OUT WHY I HAVE SO MANY MISSING TEMPERATURES
+# REPLACE NA WITH SOMETHING AND THEN LOOP THROUGH EACH FILE
+# AND COUNT THE NUMBER OF INSTANCES OF NA
+# AND THEN LOOK INTO THOSE FILES
+
+# THEN REPEAT THIS WITH SALINITY INFORMATION
+# DECIDE IF ITS WORTH REMOVING ENTRIES WITHOUT TEMP & SALINITY DATA
+
+
+#####################################
+##################################
+#####################################
+
+
+# HOWEVER - only <900 files are flagged as containing an NA, and I have nearly a million entries
+# so there must be a few with a hell of a lot
+
+
+print(w.data)
+
+
+
 
 ## Ok - on to standardisation
 length(unique(master.df$TEMPERATURE_UNIT)) # two different ways of measuring temp - degC and NA
@@ -159,6 +208,7 @@ unique(master.df$JULIANINFO) # which is days since -4713-01-01
 
 # all stored in the same way
 
+library(chron)
 # let's convert all of the dates then
 ctd.date.normal <- month.day.year(jul = master.df$DATE, origin = c(month = 1, day = 1, year = -4713)) # convert to something useful
 ctd.date.vector <- paste(ctd.date.normal$year, ctd.date.normal$month, ctd.date.normal$day, sep = "-")
@@ -194,6 +244,8 @@ install.packages("marelac")
 pressures <- data.frame(PRES = master.df$PRESS, UNIT = master.df$PRESSTXT, SAL = master.df$SALINITY, 
                         TEMP = master.df$TEMPERATURE, LAT = master.df$LAT)
 
+pressures <- pressures[is.na(master.df$PRESS) == F,] # get rid of pesks NAs
+
 one.pressure <- pressures[1,]
 one.depth <- marelac::sw_depth(P = (one.pressure$PRES), lat = one.pressure$LAT)
 # gives us a depth of -7. 
@@ -206,5 +258,95 @@ one.depth <- marelac::sw_depth(P = (one.pressure$PRES), lat = one.pressure$LAT)
 
 library(oce)
 
-anothyer.depth <- oce::swDepth(pressure = (one.pressure$PRES), latitude = one.pressure$LAT, eos = "unesco")
+anothyer.depth <- oce::swDepth(pressure = (one.pressure$PRES), 
+                               latitude = one.pressure$LAT, eos = "unesco")
 # this gives us a more sensible depth of 3m (not a negative depth) - 
+
+oce.depths <- oce::swDepth(pressure = pressures$PRES, latitude = pressures$LAT, 
+                           eos = "unesco")
+
+# this doesn't 
+
+max(oce.depths) # reasonable!
+min(oce.depths) # zero. hmm. 
+
+
+# So, let's fill in the missing depths shall we?
+practice.vec <- oce::swDepth(pressure = master.df$PRESS[is.na(master.df$PRESS) == F ], latitude = master.df$LAT[is.na(master.df$PRESS) == F ], 
+                             eos = "unesco")
+save.depths <- master.df$DEPTH
+master.df$DEPTH[is.na(master.df$PRESS) == F ] <- oce::swDepth(pressure = master.df$PRESS[is.na(master.df$PRESS) == F ], latitude = master.df$LAT[is.na(master.df$PRESS) == F ], 
+                                                              eos = "unesco")
+
+checker <- data.frame(ORIG = save.depths, NEW = master.df$DEPTH) #yes they match
+
+# lets save down our new file
+
+save(master.df, file = "../Data/CTD_master_normaldatedepth.Rdata")
+
+# ok so now we have  a data.frame with dates corrected, depths corrected, singular temp
+
+# last one: salinity
+
+length(unique(master.df$SALINITY_UNIT)) #dmless (dimensionless), NA and ppt
+
+# want to convert between salinities so lets check the DMless vs the ppt metadata
+
+library(ncdf4)
+
+sal.files <- unique(subset(master.df$FILE, master.df$SALINITY_UNIT == "ppt"))
+funky.files <- unique(subset(master.df$FILE, master.df$SALINITY_UNIT == "Dmnless"))
+
+w.data <- nc_open(file = paste("../Data/BODC/AllCDTData/", sal.files[1], sep = ""))
+
+# ok so this has ppt
+print(w.data)
+# ppt = Salinity of the water body by conductivity cell
+# also called UspSal
+
+## right so what about the other one
+nc_close(w.data)
+
+w.data <- nc_open(file = paste("../Data/BODC/AllCDTData/", funky.files[1], sep = ""))
+print(w.data)
+# Practical salinity of the water body by conductivity cell and computation using UNESCO 1983 algorithm
+# so - what is difference between salinity & practical salinity? 
+
+# it would appear "for all practical purposes" that salinity in PSU (dimensionless)
+# has the same numerical value as saility in ppt
+
+# however we can use the merlac package here!
+
+library(marelac)
+
+
+
+practical.sals <- subset(master.df$SALINITY, master.df$SALINITY_UNIT == "Dmnless")
+actual.sals <- subset(master.df$SALINITY, master.df$SALINITY_UNIT == "ppt")
+
+pract.to.actua.sal <- marelac::convert_PStoAS(S = master.df$SALINITY[master.df$SALINITY_UNIT == "Dmnless"], 
+                                              #P = master.df$PRESS[master.df$SALINITY_UNIT == "Dmnless"], 
+                                              lat = store, 
+                                              lon = master.df$LONG[master.df$SALINITY_UNIT == "Dmnless"],
+                                              Ocean = "Southern")
+
+
+lats <- as.vector(master.df$LAT[master.df$SALINITY_UNIT == "Dmnless"])
+lats <- lats[is.na(lats) == F]
+
+sal.measurements <- as.data.frame(table(master.df$SALINITY_UNIT))
+
+min(lats)
+max(lats)
+
+length(lats[is.na(lats)])
+
+max(master.df$LAT[master.df$SALINITY_UNIT == "Dmnless"])
+min(master.df$LAT[master.df$SALINITY_UNIT == "Dmnless"])
+
+store <- master.df$LAT[master.df$SALINITY_UNIT == "Dmnless"]
+
+store.sorted <- sort(store, decreasing = T)
+
+
+# SEE LINE 179 FIRST
