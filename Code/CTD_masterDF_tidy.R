@@ -39,14 +39,12 @@ path.to.data <- "../Data/BODC/AllCDTData/"
 counter <- 0
   
   
-master.df <- data.frame(I = NA, DATE = NA, JULIANINFO = NA, PRESS = NA, 
-                        PRESSTXT = NA, CONDUCTIVITY = NA, 
-                        TEMPERATURE = NA, TEMPERATURE_UNIT = NA, 
-                        SALINITY = NA, 
-                        SALINITY_UNIT = NA, 
-                        LAT = NA, 
-                        LONG = NA, CRUISEID = NA, MAXDEPTH = NA, 
-                        DEPTH = NA, FILE = NA)
+master.df <- data.frame(I = NA, DATE = NA, JULIANINFO = NA, 
+                        PRESS = NA, DEPTH = NA, PRESSTXT = NA, 
+                        TEMP_P = NA, TEMP_A = NA, TEMP_UNIT = NA, 
+                        SAL_P = NA, SAL_A = NA, SAL_UNIT = NA, 
+                        LAT = NA, LONG = NA, CRUISEID = NA, MAXDEPTH = NA, 
+                        FILE = NA)
 
 holding.df <-  master.df
 
@@ -56,14 +54,12 @@ holding.df <-  master.df
 
 for (i in 1:length(r.df$file)) {
   # to ensure we're not carrying over data, we resset the holding data frame to be empty each time
-  holding.df <- data.frame(I = NA, DATE = NA, JULIANINFO = NA, PRESS = NA, 
-                           PRESSTXT = NA, CONDUCTIVITY = NA, 
-                           TEMPERATURE = NA, TEMPERATURE_UNIT = NA, 
-                           SALINITY = NA, 
-                           SALINITY_UNIT = NA, 
-                           LAT = NA, 
-                           LONG = NA, CRUISEID = NA, MAXDEPTH = NA, 
-                           DEPTH = NA, FILE = NA)
+  holding.df <- data.frame(I = NA, DATE = NA, JULIANINFO = NA, 
+                           PRESS = NA, DEPTH = NA, PRESSTXT = NA, 
+                           TEMP_P = NA, TEMP_A = NA, TEMP_UNIT = NA, 
+                           SAL_P = NA, SAL_A = NA, SAL_UNIT = NA, 
+                           LAT = NA, LONG = NA, CRUISEID = NA, MAXDEPTH = NA, 
+                           FILE = NA)
   
   # we then open the .nc file (one at a time)
   # w.data the "w." prefix here is "working" - ie will change every time
@@ -78,13 +74,12 @@ for (i in 1:length(r.df$file)) {
     w.pressure <- ncvar_get(w.data, "PRES")
     # we now re-initialise the dataframe, this time using the single re-extracted variable
     #  this makes the length of the df correct!
-    holding.df <- data.frame(I = NA, DATE = NA, JULIANINFO = NA, PRESS = w.pressure, 
-                             PRESSTXT = NA, CONDUCTIVITY = NA, 
-                             TEMPERATURE = NA, TEMPERATURE_UNIT = NA, 
-                             SALINITY = NA, SALINITY_UNIT = NA, 
-                             LAT = NA, 
-                             LONG = NA, CRUISEID = NA, MAXDEPTH = NA, 
-                             DEPTH = NA, FILE = NA)
+    holding.df <- data.frame(I = NA, DATE = NA, JULIANINFO = NA, 
+                             PRESS = w.pressure, DEPTH = NA, PRESSTXT = NA, 
+                             TEMP_P = NA, TEMP_A = NA, TEMP_UNIT = NA, 
+                             SAL_P = NA, SAL_A = NA, SAL_UNIT = NA, 
+                             LAT = NA, LONG = NA, CRUISEID = NA, MAXDEPTH = NA, 
+                             FILE = NA)
     holding.df$PRESSTXT <- w.data$var$PRES$units
   }
   
@@ -92,14 +87,12 @@ for (i in 1:length(r.df$file)) {
   
   if (length(w.data$var$DEPTH) > 0) {
     w.depth <- ncvar_get(w.data, "DEPTH")
-    holding.df <- data.frame(I = NA, DATE = NA, JULIANINFO = NA, PRESS = NA, 
-                             PRESSTXT = NA, CONDUCTIVITY = NA, 
-                             TEMPERATURE = NA, TEMPERATURE_UNIT = NA,  
-                             SALINITY = NA, 
-                             SALINITY_UNIT = NA, 
-                             LAT = NA, 
-                             LONG = NA, CRUISEID = NA, MAXDEPTH = NA, 
-                             DEPTH = w.depth, FILE = NA)
+    holding.df <- data.frame(I = NA, DATE = NA, JULIANINFO = NA, 
+                              PRESS = NA, DEPTH = w.depth, PRESSTXT = NA, 
+                              TEMP_P = NA, TEMP_A = NA, TEMP_UNIT = NA, 
+                              SAL_P = NA, SAL_A = NA, SAL_UNIT = NA, 
+                              LAT = NA, LONG = NA, CRUISEID = NA, MAXDEPTH = NA, 
+                              FILE = NA)
     
   }
   
@@ -122,25 +115,25 @@ for (i in 1:length(r.df$file)) {
   ## different types of salinity need to be captured 
   
   if (length(w.data$var$PSALPR01) > 0) {
-    holding.df$SALINITY <- ncvar_get(w.data, "PSALPR01")
-    holding.df$SALINITY_UNIT <- w.data$var$PSALPR01$units }
+    holding.df$SAL_P <- ncvar_get(w.data, "PSALPR01")
+    holding.df$SAL_UNIT <- w.data$var$PSALPR01$units }
   
   if (length(w.data$var$SSALPR01) > 0) {
     
-    holding.df$SALINITY <- ncvar_get(w.data, "SSALPR01")
-    holding.df$SALINITY_UNIT <- w.data$var$SSALPR01$units }
+    holding.df$SAL_A <- ncvar_get(w.data, "SSALPR01")
+    holding.df$SAL_UNIT <- w.data$var$SSALPR01$units }
   
   
   ## and different types of temperature
   
   if (length(w.data$var$TEMPST01) > 0) {
-    holding.df$TEMPERATURE <- ncvar_get(w.data, "TEMPST01")
-    holding.df$TEMPERATURE_UNIT <- w.data$var$TEMPST01$units }
+    holding.df$TEMP_A <- ncvar_get(w.data, "TEMPST01")
+    holding.df$TEMP_UNIT <- w.data$var$TEMPST01$units }
   
   if (length(w.data$var$TEMPPR01) > 0) {
     
-    holding.df$TEMPERATURE <- ncvar_get(w.data, "TEMPPR01")
-    holding.df$TEMPERATURE <- w.data$var$TEMPPR01$units }
+    holding.df$TEMP_P <- ncvar_get(w.data, "TEMPPR01")
+    holding.df$TEMP_UNIT <- w.data$var$TEMPPR01$units }
   
   try(holding.df$CRUISEID <- w.data$id)
   
@@ -163,11 +156,51 @@ for (i in 1:length(r.df$file)) {
 # will then need to save the final version of the master df
 
 
-save(master.df, file = "../Data/CTD_master_withTemp.Rdata")
+save(master.df, file = "../Data/CTD_master_tempsalSplit.Rdata")
 
 
 ####### THIS SHOULD RESULT IN: SINGLE Rdata files that contain only the information that we are interestd in 
 
+
+
+### We now want to put this data into a more useful format
+# firstly, we Identify if any rows are FULLY NAs, and we will remove them
+
+# check how many rows are all NAs
+# get rid of rows that are ALL nas
+
+row.rm <- c()
+
+for (j in i:length(master.df$I)) {
+  row <- master.df[j,]
+  if (length(row[is.na(row)]) == 17) {
+    row.rm <- c(row.rm, j) }
+}
+
+master.df <- master.df[-row.rm,]
+
+
+############################
+# now, let's convert the data that we have into a more useful format
+
+
+## starting with the dates - transform from a Julian date to a normal one
+
+# first of all, check they all have the same Julian conversion
+
+length(unique(master.df$JULIANINFO)) # this should be 1. If >1, then 
+# will need to do the following in two steps
+
+unique(master.df$JULIANINFO) #find out what the Julian origin date is
+
+library(chron)
+# let's convert all of the dates then
+ctd.date.normal <- month.day.year(jul = master.df$DATE, origin = c(month = 1, day = 1, year = -4713)) # convert to something useful
+ctd.date.vector <- paste(ctd.date.normal$year, ctd.date.normal$month, ctd.date.normal$day, sep = "-")
+# and add this into the master
+
+master.df$JDATE <- master.df$DATE
+master.df$DATE <- ctd.date.vector
 
 
 

@@ -24,6 +24,25 @@ library(ggplot2) # package for plotting
 library(chron) # converts julian dates (important!)
 
 
+#################
+
+# SEE LINE 179 FIRST
+
+# check how many rows are all NAs
+# get rid of rows that are ALL nas
+
+row.rm <- c()
+
+for (j in i:length(master.df$I)) {
+  row <- master.df[j,]
+  if (length(row[is.na(row)]) == 17) {
+    row.rm <- c(row.rm, j) }
+}
+
+
+
+
+
 ######################
 # prime the counter and the dataframes
 path.to.data <- "../Data/BODC/AllCDTData/"
@@ -133,15 +152,16 @@ print(w.data)
 check <- master.df[master.df$FILE == no.bath.depth[100],] # so, all NAs or just one?
 
 # all rows start with an NA, so let's remove
-master.df <- master.df[-1,]
 
 # so it appears someetimes we just don't have bathymetric data. 
 # check other entries 
 # not going to check one with a known mishap though
 length(master.df$I[is.na(master.df$I)]) # None!
-length(master.df$DATE[is.na(master.df$DATE)])
+length(master.df$DATE[is.na(master.df$DATE)]) # also none
+length(master.df$DATE[is.na(master.df$DEPTH)]) # quite a few 
 length(master.df$JULIANINFO[is.na(master.df$JULIANINFO)])
-length(master.df$TEMPERATURE[is.na(master.df$TEMPERATURE)]) # quite a few - 1087995
+length(master.df$TEMPERATURE[is.na(master.df$TEMP_A)]) # quite a few - 1087995
+length(master.df$TEMPERATURE[is.na(master.df$TEMP_P)])
 length(master.df$TEMPERATURE_UNIT[is.na(master.df$TEMPERATURE_UNIT)]) # more than before - weird! - 1413952
 length(master.df$LAT[is.na(master.df$LAT)]) # back to None! 
 length(master.df$LONG[is.na(master.df$LONG)]) # back to None phew 
@@ -203,21 +223,10 @@ print(w.data)
 ## Ok - on to standardisation
 length(unique(master.df$TEMPERATURE_UNIT)) # two different ways of measuring temp - degC and NA
 
-length(unique(master.df$JULIANINFO))
-unique(master.df$JULIANINFO) # which is days since -4713-01-01
 
-# all stored in the same way
 
-library(chron)
-# let's convert all of the dates then
-ctd.date.normal <- month.day.year(jul = master.df$DATE, origin = c(month = 1, day = 1, year = -4713)) # convert to something useful
-ctd.date.vector <- paste(ctd.date.normal$year, ctd.date.normal$month, ctd.date.normal$day, sep = "-")
-# and add this into the master
 
-master.df$JDATE <- master.df$DATE
-master.df$DATE <- ctd.date.vector
-length(unique(master.df$DATE)) # 989 unique days of data
-length(unique(ctd.date.normal$year)) # 33 years of data!
+
 
 # right - what else needs to be normalised?
 # Pressure needs to turn to depth!
@@ -349,4 +358,19 @@ store <- master.df$LAT[master.df$SALINITY_UNIT == "Dmnless"]
 store.sorted <- sort(store, decreasing = T)
 
 
-# SEE LINE 179 FIRST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
