@@ -135,7 +135,7 @@ for (i in 1:length(r.df$file)) {
     holding.df$TEMP_P <- ncvar_get(w.data, "TEMPPR01")
     holding.df$TEMP_UNIT <- w.data$var$TEMPPR01$units }
   
-  try(holding.df$CRUISEID <- w.data$id)
+  try(holding.df$CRUISEID <- ncvar_get(w.data,"SDN_CRUISE"))
   
   ### once all data gathered, then we concatenate to the master df 
   
@@ -145,19 +145,13 @@ for (i in 1:length(r.df$file)) {
   nc_close(w.data)
   
   
-  if (i %% 100 == 0) {
+  if (i %% 200 == 0) {
     print(i)  
     
   }
   
   
 }
-
-# will then need to save the final version of the master df
-
-
-save(master.df, file = "../Data/CTD_master_tempsalSplit.Rdata")
-
 
 ####### THIS SHOULD RESULT IN: SINGLE Rdata files that contain only the information that we are interestd in 
 
@@ -171,7 +165,7 @@ save(master.df, file = "../Data/CTD_master_tempsalSplit.Rdata")
 
 row.rm <- c()
 
-for (j in i:length(master.df$I)) {
+for (j in 1:length(master.df$I)) {
   row <- master.df[j,]
   if (length(row[is.na(row)]) == 17) {
     row.rm <- c(row.rm, j) }
@@ -203,4 +197,22 @@ master.df$JDATE <- master.df$DATE
 master.df$DATE <- ctd.date.vector
 
 
+
+
+### converting pressure to depth (as required)
+
+library(oce)
+save.depths <- master.df$DEPTH
+master.df$DEPTH[is.na(master.df$PRESS) == F ] <- oce::swDepth(pressure = master.df$PRESS[is.na(master.df$PRESS) == F ], 
+                                                              latitude = master.df$LAT[is.na(master.df$PRESS) == F ], 
+                                                              eos = "unesco")
+
+checker <- data.frame(ORIG = save.depths, NEW = master.df$DEPTH)
+
+
+##### ALWAYS SAVE!
+
+# will then need to save the final version of the master df
+
+save(master.df, file = "../Data/CTD_master_151021_fixedCruiseID.Rdata")
 

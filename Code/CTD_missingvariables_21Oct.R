@@ -32,65 +32,14 @@ library(chron) # converts julian dates (important!)
 # prime the counter and the dataframes
 path.to.data <- "../Data/BODC/AllCDTData/"
 
-
-
-
-
-
-load("../Data/CTD_master_withTemp.Rdata")
+load("../Data/CTD_master_151021_fixedCruiseID.Rdata")
 
 length(unique(master.df$FILE[is.na(master.df$MAXDEPTH)])) 
 # half of the records don't include bathymetric depth
 # that's weird
 # let's investigate
 
-no.bath.depth <- unique(master.df$FILE[is.na(master.df$MAXDEPTH)])
-
-
-library(ncdf4)
-
-path.to.data <- "../Data/BODC/AllCDTData/"
-w.data <- nc_open(file = paste(path.to.data, no.bath.depth[2], sep = ""))
-# where is me bathymetric depth?
-
-print(w.data)
-
-# bathymetric data is stored in SDN_BOT_DEPTH - which is what we have!
-
-check <- master.df[master.df$FILE == no.bath.depth[100],] # so, all NAs or just one?
-# all NAs!
-# so, why didn't this work? 
-
-ncvar_get(w.data, "SDN_BOT_DEPTH")
-
-check$MAXDEPTH <- ncvar_get(w.data, "SDN_BOT_DEPTH")
-w.data$var$SDN_BOT_DEPTH$
-
-print(w.data)
-
-
-# conclusion - over half of them don't 
-
-
-# let's just double check with the succesful ones
-
-has.bath <- unique(master.df$FILE[is.na(master.df$MAXDEPTH) == F])
-
-w.data <- nc_open(file = paste(path.to.data, has.bath[22], sep = ""))
-# where is me bathymetric depth?
-ncvar_get(w.data, "SDN_BOT_DEPTH")
-
-print(w.data)
-
-# bathymetric data is stored in SDN_BOT_DEPTH - which is what we have!
-
-check <- master.df[master.df$FILE == no.bath.depth[100],] # so, all NAs or just one?
-
-# all rows start with an NA, so let's remove
-
-# so it appears someetimes we just don't have bathymetric data. 
-# check other entries 
-# not going to check one with a known mishap though
+## JUST CHECKING WHERE THE NAS ARE
 length(master.df$I[is.na(master.df$I)]) # None!
 length(master.df$DATE[is.na(master.df$DATE)]) # also none
 length(master.df$DATE[is.na(master.df$DEPTH)]) # quite a few 
@@ -152,6 +101,10 @@ practical.sals <- subset(master.df$SAL_P, is.na(master.df$SAL_P) == F)
 actual.sals <- subset(master.df$SAL_A, is.na(master.df$SAL_A) == F)
 
 master.df$LONG360 <- master.df$LONG + 360 # needed for marelac to run! 
+
+### this didn't work - I cancelled it after 30/40 minutes and nothing came out
+## try with a single value, and if that doesn't work, then re-think
+
 
 p2aS <-  marelac::convert_PStoAS(S = master.df$TEMP_P[subset(master.df$SAL_P, is.na(master.df$SAL_P) == F)], 
                                  #P = master.df$PRESS[master.df$SALINITY_UNIT == "Dmnless"], 
@@ -346,57 +299,6 @@ master.df$DEPTH[is.na(master.df$PRESS) == F ] <- oce::swDepth(pressure = master.
                                                               eos = "unesco")
 
 checker <- data.frame(ORIG = save.depths, NEW = master.df$DEPTH) #yes they match
-
-
-
-
-###### OUTDATED/ USELESS CODE ZONE 
-
-
-
-##### now we have all of the relevant data extracted (as afar as I know)
-# check what I've actually got! 
-# do I have all the relevant data for every thing? 
-
-file.vec <- NA
-sal.vec <- NA
-con.vec <- NA
-
-for (i in 1:7) {
-  nametoload <- paste("../Data/LongMasterDF_", i, (".Rdata"), sep = "")
-  load(nametoload)
-  file.vec <- c(file.vec, master.df$FILE)
-  sal.vec <- c(sal.vec, master.df$SALINITY)
-  con.vec <- c(con.vec, master.df$CONDUCTIVITY)
-}
-
-length(unique(con.vec)) # no conductivity data was captured, so this is all NA
-
-length(unique(sal.vec)) # quite a lot of different salinties, which is good
-# howwever a lot of errors did pop up with the salinities, so I might 
-# check which files had zero salinity
-
-
-fs <- data.frame(FILE = file.vec, SAL = sal.vec)
-
-# so, which files didn't have any saility data?
-
-
-fs.ns <- fs[is.na(fs$SAL),] # tbh this seems like most of them which isn't ideal
-
-
-fs.ns.u <- unique(fs.ns$FILE) # 2754 files don't have saility data
-# as PS001 - so clearly something else going on 
-
-
-# let's open up the first one and see what salinity is stored as
-
-library(ncdf4) # package for netcdf manipulation
-path.to.data <- "../Data/BODC/AllCDTData/"
-
-w.data <- nc_open(file = paste(path.to.data, fs.ns.u[2], sep = ""))
-print(w.data)
-
 
 
 
