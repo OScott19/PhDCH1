@@ -68,7 +68,7 @@ for (i in 1:length(uniqs)) {
   temp.model$ctdTEMP <- NA
   
   ### set up my data table for the matching process
-  # make seperate depth variable as doesn't like it when reference a df
+  # make separate depth variable as doesn't like it when reference a df
   depths <- temp.ctd$DEPTH
   dt <- data.table(depths, val = depths)
   setattr(dt, "sorted", "depths")
@@ -108,4 +108,8 @@ save(comparison, file = "../Data/CMEMS_modCTD_Comparison.Rdata")
 # something clever to detect and remove these 'matches'
 # do some R squared stuff to compare accross: time, depths & whole data frame
 
+unmatched <- mod.uniq[!(mod.uniq %in% ctd.uniq)]
 
+unm <- subset(all.model.data, all.model.data$UNIQ %in% unmatched)
+
+length(uniqs) * 50 + 1
