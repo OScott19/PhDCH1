@@ -1,0 +1,42 @@
+#!/bin/bash
+
+WGET='/usr/oscott/PHDCh1/Data/HYCOM'
+
+YEAR='2015'
+MONTH='01'
+DAY='01'
+StartSeq='0'
+EndSeq='2'
+
+NCSS='http://ncss.hycom.org/thredds/ncss'
+MODEL='GLBv0.08'
+EXPT='expt_53.X'
+
+VARS="var=salinity_bottom&water_temp_bottom&salinity&water_temp"
+SPATIAL='spatial=bb'
+NORTH='north=-50'
+SOUTH='south=-67'
+EAST='east=-20'
+WEST='west=-70'
+
+for PlusDay in `seq $StartSeq $EndSeq`; do
+
+  MyStartTime=`date -d "$YEAR-$MONTH-$DAY +$PlusDay days" +%Y-%m-%dT%H:%M:%SZ`
+  MyEndTime=`date -d "$YEAR-$MONTH-$DAY +$PlusDay days" +%Y-%m-%dT%H:%M:%SZ`
+  TimeStart="time_start=$MyStartTime"
+  TimeEnd="time_end=$MyEndTime"
+
+  echo $PlusDay
+  echo $MyStartTime $MyEndTime
+done
+
+  OutFile=$MODEL"_"$EXPT"_`echo $MyTime | cut -d 'T' -f 1`T00Z.nc"
+
+#  URL="$NCSS/$MODEL/$EXPT?$VARS&$SPATIAL&$NORTH&$SOUTH&$EAST&$WEST&$TimeStart&$TimeEnd&timeStride=1&vertCoord=&accept=netcdf4"
+
+  if [ -s $OutFile ]; then
+      echo "[warning] File $OutFile exists (skipping)"
+  else
+      wget -O $OutFile "$URL"
+  fi
+done
