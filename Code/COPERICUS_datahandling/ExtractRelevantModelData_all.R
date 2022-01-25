@@ -62,6 +62,10 @@ min(as.numeric(ctd.dates)) # 199112
 max(model.dates) #201912
 min(model.dates) #199301
 
+## check overlap
+max(models.to.read) # 201712
+min(models.to.read)#199301
+
 ## now, select only the files that overlap 
 
 models.to.run <- data.frame(PATH = all.model.list, DATE = model.dates)

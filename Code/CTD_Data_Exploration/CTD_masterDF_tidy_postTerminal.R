@@ -17,6 +17,7 @@ library(oce)
 
 load("../Data/CTD_master_211108_v3_AllConverted.Rdata")
 
+
 #####
 
 # lets screen out the bad quality data
@@ -34,7 +35,7 @@ sal.qual <- as.data.frame(table(master.df$SAL_QUAL ))
 # instead, let's just screen out all of the poor quality data
 
 master.df <- subset(master.df, master.df$TEMP_QUAL == 49) # drops to 3425258 
-master.df <- subset(master.df, master.df$SAL_QUAL == 49) # drops to 3420671
+master.df <- subset(master.df, master.df$SAL_QUAL == 49) # drops to `3420671`
 
 ######### SCREENING TO REMOVE ENTRIES WITHOUT SALINITY AND TEMPERATURE DATA
 

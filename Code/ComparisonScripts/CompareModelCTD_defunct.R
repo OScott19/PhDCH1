@@ -81,10 +81,39 @@ point.plot
 
 ## so there is a very dense grid of model dots, and CTD dates (coming in blue), 
 # and the 'model overlap' dots do not really overlap thhat much at all. 
-# clearly somethign is going wrong with the matching process 
+# clearly something is going wrong with the matching process 
+# so let's redo the matching process
+# back to ExtractRelevantModelData_tweak.R
+
+## actually, let's quickly plot something else@
+
+mod.latlongs <- data.frame(lat = all.model.data$modLAT, long = all.model.data$modLON, 
+                           latlong = paste(all.model.data$modLAT, all.model.data$modLON, sep = ""))
+
+mod.latlongs <- mod.latlongs[!duplicated(mod.latlongs),]
+
+mod.ctd.latlongs <- data.frame(lat = all.model.data$ctdLAT, long = all.model.data$ctdLON, 
+                               latlong = paste(all.model.data$ctdLAT, all.model.data$ctdLON, sep = ""))
+
+mod.ctd.latlongs <- mod.latlongs[!duplicated(mod.latlongs),]
+
+###
+
+matching.locations <- ggplot(data = world) +
+  geom_sf() +
+  geom_point(data = mod.latlongs, aes(x = long, y = lat, colour = "red"), size = 2, 
+             shape = 18) +
+  geom_point(data = mod.ctd.latlongs, aes(x = long, y = lat, colour = "blue"), size = 2, 
+             shape = 20) +
+  # geom_point(data = model.df, aes(x = long, y = lat, colour = "purple"), size = 2, 
+  #             shape = 18) +
+  #scale_colour_gradientn(colours = turbo(n= 1)) +
+  coord_sf(xlim = c(-20, -79), ylim = c(-45, -70), expand = FALSE)
+
+matching.locations # ok so these do match up - that's a relief. 
 
 
-
+###
 
 
 ## add the unque identifier to the master df
